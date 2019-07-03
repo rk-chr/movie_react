@@ -1,24 +1,28 @@
 import React from 'react';
-import Img from '../../images/gatsby-astronaut.png';
+import PropTypes from 'prop-types';
+import { Link } from 'gatsby';
 import style from './index.module.css';
 
 class Movies extends React.Component {
   render() {
+    const { name, img, url } = this.props;
     return (
-      <React.Fragment>
-        <div className={style.grid}>
-          <div className={style.card}>
-            <a href="#">
-              <img src={Img} alt="movie title" />
-              <div className={style.title}>
-                <h3>Gatsby</h3>
-              </div>
-            </a>
+      <div className={style.card}>
+        <Link to={url}>
+          <img src={img} alt="movie title" />
+          <div className={style.title}>
+            <h3>{name}</h3>
           </div>
-        </div>
-      </React.Fragment>
+        </Link>
+      </div>
     );
   }
 }
+
+Movies.propTypes = {
+  name: PropTypes.string.isRequired,
+  img: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};
 
 export default Movies;

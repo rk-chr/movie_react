@@ -1,18 +1,19 @@
 import React from 'react';
 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Layout from '../components/layout';
-import Movies from '../components/Movies';
 import Search from '../components/Search';
-import DetailPage from '../components/DetailPage';
 import SEO from '../components/seo';
+import DetailPage from '../components/DetailPage';
 
 const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <Search />
-    <Movies />
-    <DetailPage />
-  </Layout>
+  <Router>
+    <Layout>
+      <SEO title="Home" />
+      <Search />
+      <Route path="title/:id" component={DetailPage} />
+    </Layout>
+  </Router>
 );
 
 export default IndexPage;
