@@ -1,0 +1,31 @@
+.image {
+  margin-top: 30px;
+  width: 40%;
+  height: 20%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.searchBox {
+  width: 60%;
+  height: 30%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.searchBox input {
+  width: 100%;
+  height: 45px;
+  padding: 15px;
+  border-radius: 25px;
+  border: 1px solid grey;
+  outline: none;
+}
+
+.searchBox button {
+  margin-left: 37%;
+  letter-spacing: 0.5px;
+  margin-top: 30px;
+  width: 120px;
+  border-radius: 20px;
+}
