@@ -1,7 +1,8 @@
 import React from 'react';
 import MovieILL from '../../images/movie_night.png';
 import style from './index.module.css';
-import axios from '../../../axios';
+import instance from '../../../axios';
+
 import Movies from '../Movies';
 
 class Search extends React.Component {
@@ -11,11 +12,11 @@ class Search extends React.Component {
   }
 
   handleChange = e => {
-    axios
+    instance
       .get(`/autocomplete/?q=${e.target.value}`)
       .then(response => {
         const items = [];
-        response.data.map(item => items.push({ name: item.name, img: item.image, id: item.url }));
+        response.data.map(item => items.push({ name: item.name, img: item.image, url: item.url }));
         this.setState({
           dropMenu: items,
           loadedMenu: false,
@@ -25,6 +26,7 @@ class Search extends React.Component {
         // handle error
         console.log(error);
       });
+    /* eslint-enable */
   }
 
   handleSubmit = event => {
@@ -35,7 +37,7 @@ class Search extends React.Component {
   }
 
   render() {
-    const { dropMenu, loadedMenu } = this.state;
+    const { dropMenu, loadedMenu, id } = this.state;
     return (
       <div className="container">
         <div className={style.image}>
@@ -53,10 +55,10 @@ class Search extends React.Component {
             </button>
           </form>
         </div>
-        {dropMenu.length && !loadedMenu > 0 ? (
+        {dropMenu.length && !loadedMenu && !id > 0 ? (
           <div className={style.dropMenu}>
-            {dropMenu.map(ele => (
-              <div className={style.titles} key={ele.name}>
+            {dropMenu.map((ele, index) => (
+              <div className={style.titles} key={String(index)}>
                 <img src={ele.img} alt="something .." />
                 {ele.name}
               </div>
@@ -65,8 +67,13 @@ class Search extends React.Component {
         ) : null}
         {loadedMenu ? (
           <div className={style.grid}>
-            {dropMenu.map(ele => (
-              <Movies name={ele.name} img={ele.img} url={ele.id} />
+            {dropMenu.map((ele, index) => (
+              <Movies
+                key={String(index)}
+                name={ele.name}
+                img={ele.img}
+                url={`/movies/${ele.url.split('/')[2]}`}
+              />
             ))}
           </div>
         ) : null}
