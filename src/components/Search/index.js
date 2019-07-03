@@ -1,10 +1,14 @@
 import React from 'react';
+import axios from 'axios';
 import MovieILL from '../../images/movie_night.png';
 import style from './index.module.css';
 import instance from '../../../axios';
 
 import Movies from '../Movies';
 
+const { CancelToken } = axios;
+
+let cancel;
 class Search extends React.Component {
   state = {
     dropMenu: [],
@@ -12,21 +16,29 @@ class Search extends React.Component {
   }
 
   handleChange = e => {
-    instance
-      .get(`/autocomplete/?q=${e.target.value}`)
-      .then(response => {
-        const items = [];
-        response.data.map(item => items.push({ name: item.name, img: item.image, url: item.url }));
-        this.setState({
-          dropMenu: items,
-          loadedMenu: false,
+    if (cancel !== undefined) {
+      cancel('Cancelling previous request');
+    }
+    if (e.target.value !== '') {
+      instance
+        .get(`/autocomplete/?q=${e.target.value}`, {
+          cancelToken: new CancelToken(c => {
+            cancel = c;
+          }),
+        })
+        .then(response => {
+          const items = [];
+          response.data.map(item => items.push({ name: item.name, img: item.image, url: item.url }));
+          this.setState({
+            dropMenu: items,
+            loadedMenu: false,
+          });
+        })
+        .catch(error => {
+          // handle error
+          console.log(error);
         });
-      })
-      .catch(error => {
-        // handle error
-        console.log(error);
-      });
-    /* eslint-enable */
+    }
   }
 
   handleSubmit = event => {
