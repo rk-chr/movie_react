@@ -15,7 +15,7 @@ class Search extends React.Component {
   state = {
     dropMenu: [],
     loading: false,
-    loaded: false,
+    loaded: false
   }
 
   handleChange = e => {
@@ -59,7 +59,10 @@ class Search extends React.Component {
   }
 
   render() {
-    const { dropMenu, loaded, loading } = this.state;
+    const {
+      dropMenu, loaded, loading, recent
+    } = this.state;
+    console.log(recent);
     return (
       <div className="container">
         <h1 style={{ textAlign: 'center', marginTop: '14px' }}>Imdb Movie Library</h1>

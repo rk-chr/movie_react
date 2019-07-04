@@ -9,9 +9,13 @@ import axios from '../../../axios';
 import SEO from '../seo';
 
 class DetailPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+  }
   state = {
     list: {},
-    loading: true
+    loading: true,
   }
 
   componentDidMount() {
@@ -46,9 +50,6 @@ class DetailPage extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (window && window.scrollTo) {
-      window.scrollTo(0, document.body.scrollHeight);
-    }
     const {
       location: { pathname }
     } = this.props;
@@ -68,6 +69,7 @@ class DetailPage extends React.Component {
               datePublished: res.data.datePublished
             }
           });
+          window.scrollTo(0, this.myRef.current.offsetTop);
         })
         .catch(err => {
           console.log(err);
@@ -87,7 +89,7 @@ class DetailPage extends React.Component {
           loading ? (
             <div className={`spinner-grow text-success ${style.spBig}`}></div>
           ) : (
-              <div className="container">
+              <div className="container" ref={this.myRef} style={{ marginBottom: '600px', marginTop: '45px' }}>
                 <div className={style.image}>
                   <img src={img} alt="something" />
                 </div>

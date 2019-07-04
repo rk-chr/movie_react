@@ -7,10 +7,22 @@ import { Link } from 'gatsby';
 import style from './index.module.css';
 
 class Movies extends React.Component {
+  handleStorage = () => {
+    const { name, img, url } = this.props;
+    if (localStorage.getItem('cards')) {
+      const arr = JSON.parse(localStorage.getItem('cards'));
+      arr.push({ name: `${name}`, img: `${img}`, url: `${url}` });
+
+      localStorage.setItem('cards', JSON.stringify(arr));
+    } else {
+      localStorage.setItem('cards', JSON.stringify([{ name: `${name}`, img: `${img}`, url: `${url}` }]));
+    }
+  }
+
   render() {
     const { name, img, url } = this.props;
     return (
-      <div className={style.card}>
+      <div className={style.card} onClick={this.handleStorage}>
         <Link to={url}>
           <img src={img} alt="movie title" />
           <div className={style.title}>
