@@ -3,7 +3,7 @@
 
 1.  **Clone the Repo**
 ```
-git clone https://github.com/ramki2486/imdb_scraper.git
+git clone https://github.com/ramki2486/movie_react
 ```
 
 2.  **Navigate to folder**
