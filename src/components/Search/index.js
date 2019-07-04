@@ -21,11 +21,14 @@ class Search extends React.Component {
   handleChange = e => {
     if (cancel !== undefined) {
       this.setState({
-        loading: true
+        loading: false
       });
       cancel('Cancelling previous request');
     }
     if (e.target.value !== '') {
+      this.setState({
+        loading: true
+      });
       instance
         .get(`/autocomplete/?q=${e.target.value}`, {
           cancelToken: new CancelToken(c => {
