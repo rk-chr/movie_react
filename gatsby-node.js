@@ -12,17 +12,11 @@ exports.onCreatePage = async ({ page, actions }) => {
 };
 
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-  if (stage === 'build-html') {
-    actions.setWebpackConfig({
-      module: {
-        rules: [
-          {
-            test: /bad-module/,
-            use: loaders.null(),
-          },
-        ],
-      },
-    });
-  }
-};
+// exports.onCreateWebpackConfig = ({ stage, actions }) => {
+//   if (stage === 'build-html') {
+//     actions.loader('null', {
+//       test: /js-cookie/,
+//       loader: 'null-loader',
+//     });
+//   }
+// };

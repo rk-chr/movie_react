@@ -46,7 +46,9 @@ class DetailPage extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    window.scrollTo(0, document.body.scrollHeight);
+    if (window && window.scrollTo) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
     const {
       location: { pathname }
     } = this.props;
