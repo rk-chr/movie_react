@@ -14,12 +14,18 @@
 }
 
 .searchBox input {
+  background: #fff;
   width: 100%;
   height: 45px;
   padding: 15px;
   border-radius: 25px;
-  border: 1px solid grey;
+  border: 1px solid #dfe1e5;
   outline: none;
+}
+
+.searchBox input:hover {
+  box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+  border-color: rgba(223,225,229,0);
 }
 
 .searchBox button {

@@ -1,5 +1,7 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'gatsby';
 import MovieILL from '../../images/movie_night.png';
 import style from './index.module.css';
 import instance from '../../../axios';
@@ -12,11 +14,15 @@ let cancel;
 class Search extends React.Component {
   state = {
     dropMenu: [],
-    loadedMenu: false,
+    loading: false,
+    loaded: false,
   }
 
   handleChange = e => {
     if (cancel !== undefined) {
+      this.setState({
+        loading: true
+      });
       cancel('Cancelling previous request');
     }
     if (e.target.value !== '') {
@@ -31,7 +37,8 @@ class Search extends React.Component {
           response.data.map(item => items.push({ name: item.name, img: item.image, url: item.url }));
           this.setState({
             dropMenu: items,
-            loadedMenu: false,
+            loaded: false,
+            loading: false
           });
         })
         .catch(error => {
@@ -44,14 +51,15 @@ class Search extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     this.setState({
-      loadedMenu: true,
+      loaded: true,
     });
   }
 
   render() {
-    const { dropMenu, loadedMenu, id } = this.state;
+    const { dropMenu, loaded, loading } = this.state;
     return (
       <div className="container">
+        <h1 style={{ textAlign: 'center', marginTop: '14px' }}>Imdb Movie Library</h1>
         <div className={style.image}>
           <img src={MovieILL} alt="imdb movie illustrator" />
         </div>
@@ -59,7 +67,7 @@ class Search extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <input
               type="text"
-              placeholder="search movie name"
+              placeholder="search any movie name"
               onChange={this.handleChange}
             />
             <button type="submit" className="btn btn-secondary">
@@ -67,17 +75,23 @@ class Search extends React.Component {
             </button>
           </form>
         </div>
-        {dropMenu.length && !loadedMenu && !id > 0 ? (
+        {dropMenu.length && !loaded ? (
           <div className={style.dropMenu}>
             {dropMenu.map((ele, index) => (
               <div className={style.titles} key={String(index)}>
-                <img src={ele.img} alt="something .." />
-                {ele.name}
+                <Link to={`/movies/${ele.url.split('/')[2]}`}>
+                  <img src={ele.img} alt="something .." />
+                  {ele.name}
+                </Link>
               </div>
             ))}
           </div>
+        ) : loading ? (
+          <div className={style.dropMenu}>
+            <div className="spinner-border text-success"></div>
+          </div>
         ) : null}
-        {loadedMenu ? (
+        {loaded ? (
           <div className={style.grid}>
             {dropMenu.map((ele, index) => (
               <Movies

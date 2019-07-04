@@ -22,3 +22,16 @@
   border-radius: 50px;
   margin-right: 10px;
 }
+
+.para {
+  display: inline;
+  margin-right: 10px;
+}
+
+.spBig {
+  height: 100px;
+    width: 100px;
+    position: relative;
+    top: 100px;
+    left: 380px;
+}
